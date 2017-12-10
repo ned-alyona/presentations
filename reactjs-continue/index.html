@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>React.js: overview</title>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="shower/themes/ribbon/styles/screen-16x10.css">
+</head>
+<body class="shower list">
+	<header class="caption">
+		<h1>React.js overview</h1>
+		<p>by Alyona Pysarenko</p>
+	</header>
+
+	<section class="slide" id="cover">
+		<figure>
+			<img class="cover" src="pictures/cover.png" alt="Karma and Jasmine">
+		</figure>
+		<h2>React.js overview: state and props, mixins, router</h2>
+		<p>by Alyona Pysarenko</p>
+	</section>
+
+	<section class="slide">
+		<h2>Agenda</h2>
+		<ol>
+			<li>State and props</li>
+			<li>Mixins and pure render</li>
+			<li>Router</li>
+		</ol>
+	</section>
+
+	<section class="slide">
+		<h2>Common ground for state and props</h2>
+		<p>Both state and props:</p>
+		<ol>
+			<li>are <b>plain JS objects</b></li>
+			<li>changes trigger a <b>render update</b></li>
+			<li>are <b>deterministic</b>. If Component generates different outputs for the same combination of props and state then you're doing something wrong</li>
+		</ol>
+	</section>
+
+	<section class="slide">
+		<h2>Difference between state and props</h2>
+		<div class="double">
+			<div>
+				<p><b>Props</b></p>
+				<ol>
+					<li>are immutable</li>
+					<li>are used to pass data down from view-controller</li>
+					<li>have better performance</li>
+					<li>come to the component from parent components</li>
+					<li>are initialization data</li>
+					<li>can be validated, state – not</li>
+					<br>
+				</ol>
+			</div>
+			<div>
+				<p><b>State</b></p>
+				<ol>
+					<li>is mutable</li>
+					<li>should be managed in your view-controller</li>
+					<li>has worse performance</li>
+					<li>should not be accessed from child components</li>
+					<li>is initialized inside the component</li>
+					<li>is internal data-set</li>
+				</ol>
+			</div>
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>Changing state and props</h2>
+		<img src="pictures/slide5.jpg" alt="Changing state and props">
+	</section>
+
+	<section class="slide">
+		<h2>Should Component have state?</h2>
+		<p><i>state</i> is optional, state increases complexity and reduces predictability, a Component without state is preferable, should avoid having too many Stateful Components</p>
+		<ol><b>Component types</b>
+			<li><b>Stateless</b> — Only props, no state. All logic revolves around received props. This makes them very easy to follow and test.</li>
+			<li><b>Stateful</b> — Both props and state. Also called state managers. They are in charge of client-server communication (XHR, web sockets, etc.), processing data and responding to user events.</li>
+		</ol>
+	</section>
+
+	<section class="slide">
+		<ol><b>What should go in State?</b>
+			<li>Data that a component's event handlers may change to trigger a UI update</li>
+			<li>Minimal possible representation of logic</li>
+		</ol>
+		<ol><b>What shouldn't go in State?</b>
+			<li>Duplicated data from props</li>
+			<li>React components</li>
+			<li>Computed data (this.state.list.length)</li>
+		</ol>
+	</section>
+
+	<section class="slide set-init-state">
+		<h2>Set initial state</h2>
+		<img src="pictures/slide6.jpg" alt="Set initial state">
+	</section>
+
+	<section class="slide set-init-state">
+		<h2>Set state</h2>
+		<img src="pictures/slide7.jpg" alt="Set state">
+	</section>
+
+	<section class="slide diff-algorithm">
+		<h2>Binding</h2>
+		<ol>
+			<li>Bind in component (anti-pattern)
+				<textarea><button className="functionButton" onClick={this.stateStuff.bind(this)}>Button</button></textarea>
+			</li>
+			<li>Using arrow-functions
+				<textarea><button className="functionButton" onClick={(e) => this.stateStuff(e) }>Button</button></textarea>
+			</li>
+			<li>Bind in constructor
+				<textarea><button className="functionButton" onClick={this.stateStuff}>Button</button></textarea>
+			</li>
+			<li>Arrow-function as method
+				<textarea><button className="functionButton" onClick={this.arrowFunc}>Button</button></textarea>
+			</li>
+		</ol>
+	</section>
+
+	<section class="slide set-init-state">
+		<h2>React props</h2>
+		<p>Props are immutable parameters passed by a parent component to a child sub-component. A component can not alter its #props object (and should not alter the props themselves), the only way for props to change is for a new render to be triggered, where the parent component passes new props to the child</p>
+		<figure>
+			<img src="pictures/slide8.jpg" alt="React Props">
+		</figure>
+	</section>
+
+	<section class="slide">
+		<h2>propTypes and refs</h2>
+		<ol>
+			<li>How to make sure that component has at least one child?
+				<img src="pictures/slide9.jpg" alt="propTypes and refs">
+			</li>
+			<li>React supports a very special property that can be attached to any component that is output from render()</li>
+			<li>It is always guaranteed to be the proper instance, at any point in time</li>
+			<li>2 Types: Callback Ref, String Ref</li>
+		</ol>
+	</section>
+
+	<section class="slide">
+		<h2>Refs</h2>
+		<div class="double">
+			<div>
+				<b>String Ref</b>
+				<img src="pictures/slide11.jpg" alt="String Ref">
+			</div>
+			<div>
+				<b>Callback Ref</b>
+				<img src="pictures/slide10.jpg" alt="Callback Ref">
+				<p>Callback will be executed immediately after the component is mounted</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>classname</h2>
+		<p>Because class is a reserved JavaScript keyword, to set the class of an element you will need to use the className property name instead</p>
+		<img src="pictures/slide12.jpg" alt="className">
+	</section>
+
+	<section class="slide">
+		<h2>Mixin</h2>
+		<ol>
+			<li>Components are the best way to reuse code in React, but sometimes very different components may share some common functionality. These are sometimes called cross-cutting concerns. React provides mixins to solve this problem</li>
+			<li>Mixin has access to lifecycle methods</li>
+			<li>Unfortunately ES6 launched without any mixin support. Therefore, there is no support for mixins when you use React with ES6 classes</li>
+			<li>With ES7 coming, you can also use Decorators instead of mixins (@Decorator)</li>
+		</ol>
+	</section>
+
+	<section class="slide mixins">
+		<h2>Mixins</h2>
+		<p>How to create and use:</p>
+		<img src="pictures/slide13.jpg" alt="mixins">
+	</section>
+
+	<section class="slide">
+		<h2>Router</h2>
+		<ol>
+			<li>React.js itself doesn’t provide any routing utilities, but there’re several free, open-sources libs that works perfectly well</li>
+			<li>We will discuss react-router which has been developed by React.js team: https://github.com/reactjs/react-router</li>
+			<li>React Router keeps your UI in sync with the URL. It has a simple API with powerful features like lazy code loading, dynamic route matching, and location transition handling built right in</li>
+		</ol>
+	</section>
+
+	<section class="slide">
+		<h2>Router path</h2>
+		<ol>
+			<li>A route path is a string pattern that is used to match a URL (or part of one)</li>
+			<li>Route paths are interpreted literally, except next special symbols:
+				<ol>
+					<li><i>:paramName</i> – matches a URL segment up to the next /, ?, or #. The matched string is called a param</li>
+					<li><i>()</i> – wraps a portion of the URL that is optional</li>
+					<li><i>*</i> – matches all characters (non-greedy) up to the next character in the pattern, or to the end of the URL if there is none, and creates a splat param</li>
+					<li><i>**</i> - matches all characters (greedy) until the next /, ?, or # and creates a splat param</li>
+				</ol>
+			</li>
+		</ol>
+	</section>
+
+	<section class="slide mixins">
+		<h2>Router path example</h2>
+		<img src="pictures/slide14.jpg" alt="Router path example">
+	</section>
+
+	<section class="slide">
+		<h2>Router configuration</h2>
+		<img src="pictures/slide15.jpg" alt="Router configuration">
+	</section>
+
+	<section class="slide">
+		<h2>Dynamic routing</h2>
+		<div class="double">
+			<div>
+				<ol>
+					<li>No imports required!</li>
+					<li>First load is very fast!</li>
+					<li>Pair it with webpack chunks and your project will be as fast as can be!</li>
+			</div>
+			<div>
+				<img src="pictures/slide16.jpg" alt="Dynamic routing">
+			</div>
+		</div>
+	</section>
+
+	<div class="progress"></div>
+
+	<script src="shower/shower.min.js"></script>
+</body>
+</html>
