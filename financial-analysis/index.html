@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Financial analysis page overview</title>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="shower/themes/ribbon/styles/screen-16x10.css">
+</head>
+<body class="shower list">
+	<header class="caption">
+		<h1>Financial Analysis Page Overview</h1>
+		<p>by Alyona Pysarenko</p>
+	</header>
+
+	<section class="slide" id="cover">
+		<figure>
+			<img class="cover" src="pictures/cover1.png" alt="Financial Analysis">
+      <img class="cover" src="pictures/cover2.png" alt="Financial Analysis">
+      <img class="cover" src="pictures/cover3.png" alt="Financial Analysis">
+      <img class="cover" src="pictures/cover4.png" alt="Financial Analysis">
+		</figure>
+		<h2>Financial Analysis Page Overview</h2>
+		<p>by Alyona Pysarenko</p>
+	</section>
+
+	<section class="slide">
+		<h2>Agenda</h2>
+		<ol class="agenda">
+			<li>Financial Analysis Page location</li>
+      <li>Financial Analysis Current View</li>
+			<li>Financial Analysis Page requirements</li>
+			<li>Dashboard Schema Previous</li>
+      <li>Dashboard Schema Current</li>
+			<li>Modules logic implementation</li>
+      <li>Affordability module</li>
+      <li>Affordability tile</li>
+      <li>Affordability risks tile</li>
+      <li>Monthly expanses module</li>
+			<li>Monthly expanses tile</li>
+			<li>Tax teaser tile</li>
+      <li>Tax impact dependency</li>
+      <li>Loan-to-value module</li>
+      <li>Cash after transaction module</li>
+			<li>To be continue...</li>
+		</ol>
+	</section>
+
+  <section class="slide">
+    <h2>Financial Analysis Page location</h2>
+    <h3>Platforms:</h3>
+    <ul>
+      <li>CRM</li>
+      <li>Meeting</li>
+    </ul>
+    <figure class="location">
+      <img src="pictures/slide23.png" alt="Location">
+    </figure>
+  </section>
+
+	<section class="slide">
+		<h2>Financial Analysis Current View</h2>
+		<figure class="scroll-page">
+			<img src="pictures/slide2.png" alt="Current">
+		</figure>
+	</section>
+
+	<section class="slide">
+		<h2>Financial Analysis Page requirements</h2>
+		<figure class="scroll-page">
+			<img src="pictures/slide1.png" alt="Requirements">
+		</figure>
+	</section>
+
+	<section class="slide previous">
+		<h2>Dashboard Schema Previous</h2>
+		<textarea>
+<Dashboard>
+    <Tiles>
+        <Tile>1</Tile>
+        <Tile>2</Tile>
+    </Tiles>
+    <Detail>1</Detail>
+    <Detail>2</Detail>
+</Dashboard>
+    </textarea>
+    <div class="reducers">
+        <div class="next">context.js</div>
+    </div>
+    <textarea class="next">
+export const TileContext = createContext({
+    activeTiles: {},
+    openTile: () => {},
+    closeTile: () => {}
+});
+    </textarea>
+    <div class="actions next">
+        <div class="click1">click 1</div>
+        <div class="setOpenned"><span class="arrowTop"></span>openTile()</div>
+    </div>
+    <div class="actions next">
+        <textarea class="tileName activeDetails">
+const tileName = event.target.dataset['tile'];
+        </textarea>
+    </div>
+    <div class="actions next">
+        <textarea class="openTile activeDetails">
+activeTiles = { ...activeTiles, [tileName]: true }
+        </textarea>
+    </div>
+    <div class="actions next">
+        <div class="click2">click 2</div>
+        <div class="setClosed"><span class="arrowBottom"></span>closeTile()</div>
+    </div>
+    <div class="actions next">
+        <textarea class="closeTile activeDetails">
+activeTiles = { ...activeTiles, [tileName]: false }
+        </textarea>
+    </div>
+	</section>
+
+	<section class="slide severalDetails">
+		<h2>Open several details</h2>
+    <div>context.js</div>
+    <textarea class="next activeDetails constants">
+import { AFFORDABILITY, AFFORDABILITY_AVERAGE, AFTER_RETIREMENT, BEFORE_RETIREMENT } from './constants';
+    </textarea>
+    <textarea class="next activeDetails">
+const openTile = () => {}
+    </textarea>
+    <textarea class="next">
+if (tileName === AFFORDABILITY) {
+    activeTiles[BEFORE_RETIREMENT] = true;
+    activeTiles[AFTER_RETIREMENT] = true;
+    activeTiles[AFFORDABILITY_AVERAGE] = true;
+};
+    </textarea>
+    <textarea class="next activeDetails">
+const closeTile = () => {}
+    </textarea>
+    <textarea class="next">
+if (!activeTiles[AFFORDABILITY]) {
+    activeTiles[BEFORE_RETIREMENT] = false;
+    activeTiles[AFTER_RETIREMENT] = false;
+    activeTiles[AFFORDABILITY_AVERAGE] = false;
+}
+    </textarea>
+	</section>
+
+    <section class="slide">
+    <h2>Dashboard Schema Current</h2>
+    <textarea>
+<Dashboard topTiles={topTiles} topDetails={topDetails}>
+    <Tiles>
+        <Tile>1</Tile>
+        <Tile>2</Tile>
+    </Tiles>
+    <Detail>1</Detail>
+    <Detail>2</Detail>
+</Dashboard>
+    </textarea>
+    <div class="actions">
+        <div class="next">actions.js</div>
+    </div>
+    <div class="reducers next">reducers.js</div>
+    <div class="actions next">
+        <div class="click1">click 1</div>
+        <div class="setOpenned"><span class="arrowTop"></span>SET_OPENED_DETAILS</div>
+    </div>
+    <textarea class="next activeDetails">activeDetails: ['Detail1']</textarea>
+    <div class="actions next">
+        <div class="click2">click 2</div>
+        <div class="setClosed"><span class="arrowBottom"></span>SET_CLOSED_DETAILS</div>
+    </div>
+    <textarea class="next activeDetails">activeDetails: []</textarea>
+  </section>
+
+  <section class="slide">
+    <h2>Open several details</h2>
+    <figure class="next left-img">
+      <img src="pictures/slide3.png" alt="several details">
+    </figure>
+    <div class="width50">
+      <textarea class="next">
+const affordabilityDetailsList = [
+    'affordabilityMainDetail',
+    'affordabilityNoteDetail'
+];
+
+export const topTiles = {
+    [affordabilityDetailsList]: AffordabilityPreview
+};
+
+export const topDetails = {
+    affordabilityMainDetail: AffordabilityAverageDetail,
+    affordabilityNoteDetail: AffordabilityNoteDetail
+};
+      </textarea>
+      <textarea class="next">
+<Tiles>
+    { normalizedTiles(topTiles)
+        .map(({ name, component: Component }) =>
+            <Tile key={name} tileName={name}>
+                <Component />
+            </Tile>
+        )
+    }
+</Tiles>
+      </textarea>
+      <div class="next">
+          <div class="setOpenned"><span class="arrowTop"></span></div>
+          <div class="setOpenned second"><span class="arrowTop"></span></div>
+      <textarea>
+openDetails(tileArray)
+      </textarea>
+    </div>
+    </div>
+  </section>
+
+	<section class="slide">
+		<h2>Modules logic implementation</h2>
+    <figure class="full-height">
+      <img src="pictures/slide4.png" alt="Modules logic implementation">
+    </figure>
+	</section>
+
+	<section class="slide">
+		<h2>Affordability module</h2>
+      <span class="next">Affordability tile:</span>
+      <ul>
+        <li class="next">Affordability</li>
+        <li class="next">Affordability Note</li>
+      </ul>
+      <span class="next">Sustainable affordability tile (Risks):</span>
+      <ul>
+        <li class="next">Affordability Before Retirement</li>
+        <li class="next">Affordability After Retirement</li>
+        <li class="next">Sustainable affordability</li>
+      </ul>
+      <figure class="next affordability-structure">
+        <img src="pictures/slide9.png" alt="Affordability module structure">
+      </figure>
+	</section>
+
+	<section class="slide">
+		<h2>Affordability tile</h2>
+    <figure class="img-left">
+      <img src="pictures/slide8.png" alt="Affordability tile">
+    </figure>
+    <figure class="next img-right">
+      <img src="pictures/slide10.png" alt="Affordability tile details">
+    </figure>
+	</section>
+
+  <section class="slide">
+    <h2>Affordability risks tile</h2>
+    <figure class="scroll-page">
+      <img src="pictures/slide11.png" alt="Affordability risks">
+    </figure>
+  </section>
+
+	<section class="slide">
+		<h2>Monthly expanses module</h2>
+    <ul>
+      <li class="next">Monthly expanses tile</li>
+      <li class="next">Tax teaser tile</li>
+    </ul>
+    <figure class="next preview">
+      <img src="pictures/slide14.png" alt="Monthly expanses preview">
+      <img src="pictures/slide15.png" alt="Tax teaser preview">
+    </figure>
+    <figure class="next monthly-expenses">
+      <img src="pictures/slide12.png" alt="Monthly expanses module structure">
+    </figure>
+	</section>
+
+  <section class="slide">
+    <h2>Monthly expanses tile</h2>
+    <figure class="full-height space">
+      <img src="pictures/slide16.png" alt="Monthly expanses tile">
+      <img src="pictures/slide18.png" alt="Monthly expanses files">
+    </figure>
+  </section>
+
+  <section class="slide">
+    <h2>Tax teaser tile</h2>
+    <figure class="tax-slide">
+      <img src="pictures/slide17.png" alt="Tax teaser tile">
+    </figure>
+  </section>
+
+  <section class="slide">
+    <h2>Tax impact dependency</h2>
+    <figure class="full-height">
+      <img src="pictures/slide5.png" alt="Monthly expanses tile">
+    </figure>
+  </section>
+
+
+  <section class="slide">
+    <h2>Loan-to-value module</h2>
+    <figure class="full-height space">
+      <img src="pictures/slide19.png" alt="Loan-to-value module">
+      <img src="pictures/slide21.png" alt="Loan-to-value files">
+    </figure>
+  </section>
+
+  <section class="slide">
+    <h2>Cash after transaction module</h2>
+    <figure class="full-height space">
+      <img src="pictures/slide20.png" alt="Cash after transaction module">
+      <img src="pictures/slide22.png" alt="Cash after transaction files">
+    </figure>
+  </section>
+
+  <section class="slide">
+    <h2>To be continue...</h2>
+    <figure class="full-height">
+      <img src="pictures/slide6.png" alt="new design">
+    </figure>
+  </section>
+
+  <section class="slide">
+    <h2>Details design</h2>
+    <figure class="scroll-page">
+      <img src="pictures/slide7.png" alt="new design">
+    </figure>
+  </section>
+
+	<section class="slide thank-you">
+		<h1>Thank you for your attention!</h1>
+	</section>
+
+	<div class="progress"></div>
+
+	<script src="shower/shower.min.js"></script>
+</body>
+</html>
